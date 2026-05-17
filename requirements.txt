@@ -1,0 +1,4 @@
+openai==2.29.0
+python-dotenv==1.2.2
+mcp==1.27.1
+ddgs==9.14.4
