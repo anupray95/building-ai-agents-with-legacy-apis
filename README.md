@@ -39,7 +39,7 @@ Copy `.env.example` to `.env` (or just create a `.env`) and fill in:
 
 ```
 AI_API_KEY=your_api_key_here
-AI_BASE_URL=https://api.deepseek.com   # optional, leave blank for OpenAI
+AI_BASE_URL= # optional, leave blank for OpenAI
 AI_MODEL=your_model_name
 ```
 
