@@ -1,7 +1,10 @@
+import os
 from agent.core import core_agent
 from agent.tools import tools, tools_registry
 from agent.mcp_bridge import MCPBridge
 from agent.prompt import build_system_prompt
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 bridge = MCPBridge()
 mcp_registry, mcp_descriptors = bridge.load()
@@ -9,7 +12,7 @@ mcp_registry, mcp_descriptors = bridge.load()
 tools_registry.update(mcp_registry)
 all_tools = tools + mcp_descriptors
 
-system_prompt = build_system_prompt(all_tools)
+system_prompt = build_system_prompt(all_tools, base_dir=BASE_DIR)
 
 if __name__ == "__main__":
     history = [{"role": "system", "content": system_prompt}]

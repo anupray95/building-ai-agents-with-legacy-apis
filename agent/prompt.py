@@ -1,5 +1,31 @@
-def build_system_prompt(tools):
-    return f"""You are an AI Agent. ONLY return valid JSON — no prose, no markdown, no code fences.
+import os
+
+CONTEXT_FILE_ORDER = {
+    "agents.md": 10,
+    "soul.md":   20,
+    "memory.md": 70,
+}
+
+
+def load_context_files(base_dir="."):
+    candidates = sorted(CONTEXT_FILE_ORDER.items(), key=lambda x: x[1])
+    sections = []
+    for fname, _ in candidates:
+        path = os.path.join(base_dir, fname)
+        try:
+            with open(path) as f:
+                content = f.read().strip()
+            if content:
+                sections.append(content)
+        except FileNotFoundError:
+            pass
+    return "\n\n".join(sections)
+
+
+def build_system_prompt(tools, base_dir="."):
+    context = load_context_files(base_dir)
+    context_block = f"{context}\n\n" if context else ""
+    return f"""{context_block}ONLY return valid JSON — no prose, no markdown, no code fences.
 
 You have access to the following tools: {tools}
 
